@@ -1,0 +1,13 @@
+2. Aufgabe:
+    a)
+        "gerade" ruft sich selbst x-1-mal auf
+        "verdopple" ruft sich ebenfalls x-1-mal auf
+        "halbiere" ruft sich ((int)x/2)-mal auf
+
+    b)
+        "gerade" wird insgesamt b mal aufgerufen
+        "verdopple" wird insgesamt a-mal aufgerufen
+        "halbiere" wird insgesamt 1+b/2-mal aufgerufen
+
+    c)
+        f wird insgesamt (log_2 b) + 1 - mal aufgerufen
