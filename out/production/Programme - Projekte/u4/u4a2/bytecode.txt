@@ -1,0 +1,38 @@
+Compiled from "RecursiveAckermann.java"
+public class u4.u4a2.RecursiveAckermann {
+  public u4.u4a2.RecursiveAckermann();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public int A(int, int);
+    Code:
+       0: iload_1
+       1: ifne          8
+       4: iload_2
+       5: iconst_1
+       6: iadd
+       7: ireturn
+       8: iload_2
+       9: ifne          21
+      12: aload_0
+      13: iload_1
+      14: iconst_1
+      15: isub
+      16: iconst_1
+      17: invokevirtual #2                  // Method A:(II)I
+      20: ireturn
+      21: aload_0
+      22: iload_1
+      23: iconst_1
+      24: isub
+      25: aload_0
+      26: iload_1
+      27: iload_2
+      28: iconst_1
+      29: isub
+      30: invokevirtual #2                  // Method A:(II)I
+      33: invokevirtual #2                  // Method A:(II)I
+      36: ireturn
+}
