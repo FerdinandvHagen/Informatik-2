@@ -34,6 +34,10 @@ public class SortedLists {
      * @return the sorted variant of the given list
      */
     public static List sort(List list) {
-        return insertSorted(list.next, list.value);
+        if(list == null) {
+            return null;
+        }
+
+        return insertSorted(sort(list.next), list.value);
     }
 }
