@@ -81,14 +81,11 @@ public class Tests2 {
     @Test public void testEmpty() {
         IStack stack = StackFactory.create();
         assertTrue(stack.empty());
-        System.out.println(stack.toString());
         stack.push(1);
-        System.out.println(stack.toString());
         assertFalse(stack.empty());
         stack.peek();
         assertFalse(stack.empty());
         stack.pop();
-        System.out.println(stack.toString());
         assertTrue(stack.empty());
     }
 }

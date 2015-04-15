@@ -12,11 +12,6 @@ import static org.junit.Assert.assertTrue;
 public class Tests {
 	
 	/**
-	 * TODO: Create test for method empty and documentation
-	 */
-
-	
-	/**
 	 * Create a small stack and push one item onto it.
 	 */
 	@Test public void create()
