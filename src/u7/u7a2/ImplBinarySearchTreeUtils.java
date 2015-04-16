@@ -103,12 +103,15 @@ public class ImplBinarySearchTreeUtils<T> implements IBinarySearchTreeUtils<T> {
 
     @Override
     public UnlinkSmallestResult<T> unlinkSmallest(BinarySearchTree<T> tree) {
-        if (tree.left != null) {
-            UnlinkSmallestResult result = unlinkSmallest(tree.left);
-            return new UnlinkSmallestResult<>(result.smallest, new BinarySearchTree(tree.key, tree.thing, result.tree, tree.right));
+        if(tree.left == null) {
+            //Found smallest result
+            return new UnlinkSmallestResult<>(tree, tree.right);
         }
 
-        return new UnlinkSmallestResult<>(tree, null);
+        UnlinkSmallestResult result = unlinkSmallest(tree.left);
+        tree.left = result.tree;
+
+        return new UnlinkSmallestResult<T>(result.smallest, tree);
     }
 
     @Override
@@ -123,37 +126,11 @@ public class ImplBinarySearchTreeUtils<T> implements IBinarySearchTreeUtils<T> {
             return new BinarySearchTree<T>(tree.key, tree.thing, remove(tree.left, key), tree.right);
         }
 
-        //Replace it!
-        if(tree.right == null && tree.left == null) {
-            return null;
-        }
-
         if(tree.right == null) {
             return tree.left;
         }
 
-        if(tree.left == null) {
-            return tree.right;
-        }
-
-        UnlinkSmallestResult result = unlinkSmallest(tree.right);
-        BinarySearchTree result1 = insert(result.smallest, result.tree);
-        return insert(result1, tree.left);
-    }
-
-    private BinarySearchTree<T> insert(BinarySearchTree<T> smallest, BinarySearchTree tree) {
-        if(tree == null) {
-            return smallest;
-        }
-
-        if (smallest == null) {
-            return tree;
-        }
-
-        if (tree.key > smallest.key) {
-            return new BinarySearchTree<T>(smallest.key, smallest.thing, smallest.left, insert(smallest.right, tree));
-        } else {
-            return new BinarySearchTree<T>(smallest.key, smallest.thing, insert(smallest.left, tree), smallest.right);
-        }
+        UnlinkSmallestResult<T> result = unlinkSmallest(tree.right);
+        return new BinarySearchTree<T>(result.smallest.key, result.smallest.thing, tree.left, result.tree);
     }
 }
