@@ -68,6 +68,10 @@ public class FirstPlayer implements ReversiPlayer {
         }
         System.out.println();
 
+        if(possible.size() == 0) {
+            return null;
+        }
+
         return possible.get((int)(Math.random() * possible.size() - 1));
     }
 }
