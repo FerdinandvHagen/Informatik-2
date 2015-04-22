@@ -1,10 +1,10 @@
 package u8.u8a2;
 
-import org.junit.Test;
-import org.junit.Before;
-import java.util.ArrayList;
-
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.util.ArrayList;
 
 public class Tests {
 	private IRucksack rucksack;
