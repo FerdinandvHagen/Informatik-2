@@ -92,6 +92,7 @@ public class Tests {
                 27550, 29598, 24984, 29845, 27854, 20923, 25762, 31094, 22961, 25805};
         int maxWeight = 100000;
         boolean selection[] = {true, false, false, true, false, false, true, true, true, true, false, false, false, true, false, true, false, false, false, false};
+
         runTest(values, weights, maxWeight, selection, true);
     }
 }
