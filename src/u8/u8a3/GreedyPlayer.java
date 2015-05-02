@@ -31,11 +31,13 @@ public class GreedyPlayer implements ReversiPlayer {
                 //Now we have every possibility
                 if (gameBoard.checkMove(this.player, new Coordinates(i + 1, n + 1))) {
                     try {
-                        if(getMaxStones(gameBoard, new Coordinates(i+1, n+1)) > maxValue){
-                            System.out.println("Found good coordinates: " + new Coordinates(i+1, n+1) + " Stones: " + getMaxStones(gameBoard, new Coordinates(i+1, n+1)));
-                            result = new Coordinates(i+1, n+1);
-                            maxValue = getMaxStones(gameBoard, new Coordinates(i+1, n+1));
-                        };
+                        if (getMaxStones(gameBoard, new Coordinates(i + 1, n + 1)) > maxValue) {
+                            System.out.println("Found good coordinates: " + new Coordinates(i + 1, n + 1) + " Stones:" +
+                                    " " + getMaxStones(gameBoard, new Coordinates(i + 1, n + 1)));
+                            result = new Coordinates(i + 1, n + 1);
+                            maxValue = getMaxStones(gameBoard, new Coordinates(i + 1, n + 1));
+                        }
+                        ;
                     } catch (OutOfBoundsException e) {
                         e.printStackTrace();
                     }
@@ -50,124 +52,32 @@ public class GreedyPlayer implements ReversiPlayer {
 
     public int getMaxStones(GameBoard gb, Coordinates coord) throws OutOfBoundsException {
         int sum = 0;
-        int stones = 0;
-        for (int i = coord.getCol() - 1; gb.validCoordinates(new Coordinates(coord.getRow(), i)); i--) {
-            int occupation = gb.getOccupation(new Coordinates(coord.getRow(), i));
-            if (occupation == player && stones > 0) {
-                sum += stones;
-                break;
-            }
-
-            if (occupation == 0 || occupation == player) {
-                break;
-            }
-
-            stones++;
-        }
-
-        stones = 0;
-        for (int i = coord.getCol() + 1; gb.validCoordinates(new Coordinates(coord.getRow(), i)); i++) {
-            int occupation = gb.getOccupation(new Coordinates(coord.getRow(), i));
-            if (occupation == player && stones > 0) {
-                sum += stones;
-                break;
-            }
-
-            if (occupation == 0 || occupation == player) {
-                break;
-            }
-
-            stones++;
-        }
-
-        stones = 0;
-        for (int i = coord.getRow() + 1; gb.validCoordinates(new Coordinates(i, coord.getCol())); i++) {
-            int occupation = gb.getOccupation(new Coordinates(i, coord.getCol()));
-            if (occupation == player && stones > 0) {
-                sum += stones;
-                break;
-            }
-
-            if (occupation == 0 || occupation == player) {
-                break;
-            }
-
-            stones++;
-        }
-
-        stones = 0;
-        for (int i = coord.getRow() - 1; gb.validCoordinates(new Coordinates(i, coord.getCol())); i--) {
-            int occupation = gb.getOccupation(new Coordinates(i, coord.getCol()));
-            if (occupation == player && stones > 0) {
-                sum += stones;
-                break;
-            }
-
-            if (occupation == 0 || occupation == player) {
-                break;
-            }
-
-            stones++;
-        }
-
-        //Now Diagonal
-        stones = 0;
-        for (int i = 1; gb.validCoordinates(new Coordinates(coord.getRow() + i, coord.getCol() + i)); i++) {
-            int occupation = gb.getOccupation(new Coordinates(coord.getRow() + i, coord.getCol() + i));
-            if (occupation == player && stones > 0) {
-                sum += stones;
-                break;
-            }
-
-            if (occupation == 0 || occupation == player) {
-                break;
-            }
-
-            stones++;
-        }
-        stones = 0;
-        for (int i = 1; gb.validCoordinates(new Coordinates(coord.getRow() + i, coord.getCol() - i)); i++) {
-            int occupation = gb.getOccupation(new Coordinates(coord.getRow() + i, coord.getCol() - i));
-            if (occupation == player && stones > 0) {
-                sum += stones;
-                break;
-            }
-
-            if (occupation == 0 || occupation == player) {
-                break;
-            }
-
-            stones++;
-        }
-        stones = 0;
-        for (int i = 1; gb.validCoordinates(new Coordinates(coord.getRow() - i, coord.getCol() + i)); i++) {
-            int occupation = gb.getOccupation(new Coordinates(coord.getRow() - i, coord.getCol() + i));
-            if (occupation == player && stones > 0) {
-                sum += stones;
-                break;
-            }
-
-            if (occupation == 0 || occupation == player) {
-                break;
-            }
-
-            stones++;
-        }
-        stones = 0;
-        for (int i = 1; gb.validCoordinates(new Coordinates(coord.getRow() - i, coord.getCol() - i)); i++) {
-            int occupation = gb.getOccupation(new Coordinates(coord.getRow() - i, coord.getCol() - i));
-            if (occupation == player && stones > 0) {
-                sum += stones;
-                break;
-            }
-
-            if (occupation == 0 || occupation == player) {
-                break;
-            }
-
-            stones++;
-        }
+        sum += getSum(gb, coord, -1, -1);
+        sum += getSum(gb, coord, -1, 0);
+        sum += getSum(gb, coord, -1, 1);
+        sum += getSum(gb, coord, 0, -1);
+        sum += getSum(gb, coord, 0, 1);
+        sum += getSum(gb, coord, 1, -1);
+        sum += getSum(gb, coord, 1, 0);
+        sum += getSum(gb, coord, 1, 1);
 
         return sum;
+    }
+
+    private int getSum(GameBoard gb, Coordinates coord, int s, int t) throws OutOfBoundsException {
+        int stones = 0;
+        for (int i = 1; gb.validCoordinates(new Coordinates(coord.getRow() + (i * s), coord.getCol() + (i * t))); i++) {
+            int occupation = gb.getOccupation(new Coordinates(coord.getRow() + (i * s), coord.getCol() + (i * t)));
+            if (occupation == player && stones > 0) {
+                return stones + 1;
+            }
+
+            if (occupation == 0 || occupation == player) {
+                break;
+            }
+
+            stones++;
+        }
+        return 0;
     }
 }
